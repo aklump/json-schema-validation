@@ -1,0 +1,23 @@
+{
+  "name": "aklump/json-schema",
+  "description": "JSON Schema validation using PHP.",
+  "homepage": "https://github.com/aklump/json-schema",
+  "authors": [
+    {
+      "name": "Aaron Klump",
+      "homepage": "http://www.intheloftstudios.com",
+      "role": "Lead Developer"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "AKlump\\JsonSchema\\": "src/"
+    }
+  },
+  "require": {
+    "php": ">=7.4",
+    "opis/json-schema": "^2.3",
+    "ext-json": "*",
+    "aklump/default-value": "^0.0.3"
+  }
+}
