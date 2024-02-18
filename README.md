@@ -70,4 +70,4 @@ $defaults = (new \AKlump\JsonSchema\GetPropertyDefaults())($schema_json);
     ]
     ```
 
-1. Then `composer require aklump/json-schema-validation:@dev`
+1. Then `composer require aklump/json-schema-validation:^0.0`
