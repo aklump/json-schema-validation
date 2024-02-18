@@ -1,6 +1,6 @@
 composer.lock
-vendor/
+/vendor/
+/reports/
 .idea/
-.web_package/
 feature*
 *.jig*

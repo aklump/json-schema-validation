@@ -1,7 +1,7 @@
 {
-  "name": "aklump/json-schema",
+  "name": "aklump/json-schema-validation",
   "description": "JSON Schema validation using PHP.",
-  "homepage": "https://github.com/aklump/json-schema",
+  "homepage": "https://github.com/aklump/json-schema-validation",
   "authors": [
     {
       "name": "Aaron Klump",
@@ -11,13 +11,21 @@
   ],
   "autoload": {
     "psr-4": {
-      "AKlump\\JsonSchema\\": "src/"
+      "AKlump\\JsonSchema\\Validation\\": "src/"
     }
   },
+    "autoload-dev": {
+      "psr-4": {
+        "AKlump\\JsonSchema\\Validation\\Tests\\Unit\\": "./tests_unit"
+      }
+    },
   "require": {
     "php": ">=7.4",
     "opis/json-schema": "^2.3",
     "ext-json": "*",
-    "aklump/default-value": "^0.0.3"
-  }
+    "aklump/default-value": "^0.0"
+  },
+       "require-dev": {
+           "phpunit/phpunit": "^9.6"
+       }
 }
