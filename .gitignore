@@ -4,3 +4,4 @@ composer.lock
 .idea/
 feature*
 *.jig*
+.web_package/src/
