@@ -18,14 +18,16 @@ final class ValidateWithSchema {
    * Constructs a new instance of the class.
    *
    * @param string $schema_json The JSON schema file path or content.
-   * @param array $schema_directories
-   *   An array of filepaths where schemas are located.  This is used for
-   *   resolving $ref references to partial schemas.
+   * @param string $schema_file_parent_dir
+   *   The file directory that contains the JSON schema file, if the schema
+   *   exists as a file.  This is used to resolved relative $ref paths in
+   *   $schema_json.  It is optional and can be omitted if there are no relative
+   *   paths used in $ref (references).
    */
-  public function __construct(string $schema_json, array $schema_directories = []) {
+  public function __construct(string $schema_json, string $schema_file_parent_dir = '') {
     $this->schema = $schema_json;
-    foreach ($schema_directories as $schema_directory) {
-      $this->addSchemaDirectory($schema_directory);
+    if ($schema_file_parent_dir) {
+      $this->addSchemaDirectory($schema_file_parent_dir);
     }
   }
 

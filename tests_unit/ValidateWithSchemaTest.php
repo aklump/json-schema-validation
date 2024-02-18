@@ -26,14 +26,14 @@ final class ValidateWithSchemaTest extends TestCase {
   public function testNonExistentDirectoryThrows() {
     $directory = $this->getTestFileFilepath('bogus/');
     $this->expectException(\InvalidArgumentException::class);
-    new ValidateWithSchema('', [$directory]);
+    new ValidateWithSchema('', $directory);
   }
 
   public function testInvalidDataReturnsExpectedErrors() {
     $schema_path = $this->getTestFileFilepath('poem.schema.json');
     $schema_json = file_get_contents($schema_path);
     $directory = $this->getTestFilesDirectory();
-    $validate = new ValidateWithSchema($schema_json, [$directory]);
+    $validate = new ValidateWithSchema($schema_json, $directory);
     $json = '{"verseCount":2,"rhymeScheme":"AABB","originCountry":"England"}';
     $data = (new JsonDecodeLossless())($json);
     $problems = $validate($data);
@@ -45,7 +45,7 @@ final class ValidateWithSchemaTest extends TestCase {
     $schema_path = $this->getTestFileFilepath('poem.schema.json');
     $schema_json = file_get_contents($schema_path);
     $directory = $this->getTestFilesDirectory();
-    $validate = new ValidateWithSchema($schema_json, [$directory]);
+    $validate = new ValidateWithSchema($schema_json, $directory);
     $json = '{"title":"Twinkle Twinkle Little Star","verseCount":2,"rhymeScheme":"AABB","originCountry":"England"}';
     $data = (new JsonDecodeLossless())($json);
     $problems = $validate($data);
