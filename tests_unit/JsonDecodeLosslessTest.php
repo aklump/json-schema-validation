@@ -1,14 +1,23 @@
 <?php
 
-namespace AKlump\JsonSchema\Validation\Tests\Unit;
+namespace AKlump\JsonSchema\Tests\Unit;
 
-use AKlump\JsonSchema\Validation\JsonDecodeLossless;
+use AKlump\JsonSchema\JsonDecodeLossless;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \AKlump\JsonSchema\Validation\JsonDecodeLossless
+ * @covers \AKlump\JsonSchema\JsonDecodeLossless
  */
-class JsonDecodeMixedTest extends TestCase {
+class JsonDecodeLosslessTest extends TestCase {
+
+  public function testReadMeExampleCodeSnippet() {
+    $data = ['foo' => [1, 2, 3]];
+    $prepared_data = (new \AKlump\JsonSchema\JsonDecodeLossless())(json_encode($data));
+    $this->assertIsObject($prepared_data);
+    $this->assertSame(1, $prepared_data->foo[0]);
+    $this->assertSame(2, $prepared_data->foo[1]);
+    $this->assertSame(3, $prepared_data->foo[2]);
+  }
 
   public function dataFortestInvokeProvider() {
     $tests = [];

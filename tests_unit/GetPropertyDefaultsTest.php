@@ -1,12 +1,12 @@
 <?php
 
-namespace AKlump\JsonSchema\Validation\Tests\Unit;
+namespace AKlump\JsonSchema\Tests\Unit;
 
-use AKlump\JsonSchema\Validation\GetPropertyDefaults;
+use AKlump\JsonSchema\GetPropertyDefaults;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers \AKlump\JsonSchema\Validation\GetPropertyDefaults
+ * @covers \AKlump\JsonSchema\GetPropertyDefaults
  */
 class GetPropertyDefaultsTest extends TestCase {
 

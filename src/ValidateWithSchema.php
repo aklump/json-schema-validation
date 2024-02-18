@@ -2,25 +2,34 @@
 
 namespace AKlump\JsonSchema;
 
+use InvalidArgumentException;
+use Opis\JsonSchema\Errors\ErrorFormatter;
 use Opis\JsonSchema\Exceptions\SchemaException;
 
-final class Validator {
+final class ValidateWithSchema {
 
-  private $problems = [];
+  protected array $problems = [];
 
-  private $schemaDirs = [];
+  protected array $schemaDirs = [];
+
+  protected string $schema;
 
   /**
-   * @param string $schema_json
-   * @param string $basepath
-   *   The directory for resolving relative path $ref values.
+   * Constructs a new instance of the class.
+   *
+   * @param string $schema_json The JSON schema file path or content.
+   * @param array $schema_directories
+   *   An array of filepaths where schemas are located.  This is used for
+   *   resolving $ref references to partial schemas.
    */
-  public function __construct(string $schema_json, string $directory = '') {
+  public function __construct(string $schema_json, array $schema_directories = []) {
     $this->schema = $schema_json;
-    $this->addSchemaDirectory($directory);
+    foreach ($schema_directories as $schema_directory) {
+      $this->addSchemaDirectory($schema_directory);
+    }
   }
 
-  public function getValidator(): \Opis\JsonSchema\Validator {
+  protected function getValidator(): \Opis\JsonSchema\Validator {
     // @url https://opis.io/json-schema/2.x/php-validator.html
     $validator = new \Opis\JsonSchema\Validator();
 
@@ -34,36 +43,20 @@ final class Validator {
     return $validator;
   }
 
-  /**
-   * Adds a directory in order to resolves relative schema path $refs.
-   *
-   * @param string $dir The directory path to be added.
-   *
-   * @return self Returns an instance of the object to allow for method chaining.
-   * @throws \InvalidArgumentException If the directory does not exist.
-   *
-   * @code
-   * "$ref": "./_foo.schema.json#/lorem/ipsum
-   * @endcode
-   *
-   */
-  private function addSchemaDirectory(string $dir): self {
+  protected function addSchemaDirectory(string $dir): void {
     if (!file_exists($dir)) {
-      throw new \InvalidArgumentException(sprintf('$dir does not exist: %s', $dir));
+      throw new InvalidArgumentException(sprintf('$dir does not exist: %s', $dir));
     }
     $this->schemaDirs[] = $dir;
-
-    return $this;
   }
 
-  public function isValid($data): bool {
-
+  public function __invoke($data): array {
     $validator = $this->getValidator();
     try {
       $result = $validator->validate($data, $this->schema);
       if ($result->hasError()) {
         $error = $result->error();
-        $formatter = new \Opis\JsonSchema\Errors\ErrorFormatter();
+        $formatter = new ErrorFormatter();
         foreach ($formatter->format($error) as $path => $comments) {
           foreach ($comments as $comment) {
             $this->problems[] = sprintf('"%s" -- %s', $path, $comment);
@@ -75,10 +68,6 @@ final class Validator {
       $this->problems = [$exception->getMessage() . ' > ' . json_encode(json_decode($this->schema))];
     }
 
-    return empty($this->problems);
-  }
-
-  public function getProblems(): array {
     return $this->problems ?? [];
   }
 

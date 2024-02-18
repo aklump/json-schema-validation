@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "$defs": {
+    "title": {
+      "type": "string",
+      "description": "Title of the Nursery Rhyme"
+    }
+  }
+}

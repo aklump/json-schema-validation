@@ -1,6 +1,6 @@
 <?php
 
-namespace AKlump\JsonSchema\Validation;
+namespace AKlump\JsonSchema;
 
 use AKlump\DefaultValue\DefaultValue;
 

@@ -11,12 +11,12 @@
   ],
   "autoload": {
     "psr-4": {
-      "AKlump\\JsonSchema\\Validation\\": "src/"
+      "AKlump\\JsonSchema\\": "src/"
     }
   },
     "autoload-dev": {
       "psr-4": {
-        "AKlump\\JsonSchema\\Validation\\Tests\\Unit\\": "./tests_unit"
+        "AKlump\\JsonSchema\\Tests\\Unit\\": "./tests_unit"
       }
     },
   "require": {

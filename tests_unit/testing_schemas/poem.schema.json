@@ -1,0 +1,33 @@
+{
+  "title": "Nursery Rhyme",
+  "type": "object",
+  "properties": {
+    "title": {
+      "$ref": "./_definitions.schema.json#/$defs/title"
+    },
+    "verseCount": {
+      "type": "integer",
+      "description": "Number of Verses in the Rhyme"
+    },
+    "rhymeScheme": {
+      "type": "string",
+      "description": "Rhyme Scheme of the Nursery Rhyme",
+      "enum": [
+        "AABB",
+        "ABAB",
+        "AAAA",
+        "AABA"
+      ]
+    },
+    "originCountry": {
+      "type": "string",
+      "description": "Country of Origin of the Rhyme"
+    }
+  },
+  "required": [
+    "title",
+    "verseCount",
+    "rhymeScheme",
+    "originCountry"
+  ]
+}
