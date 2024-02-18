@@ -1,0 +1,20 @@
+{
+  "minimum-stability": "dev",
+  "repositories": [
+    {
+      "type": "path",
+      "url": "\/Users\/aklump\/Code\/Packages\/php\/knowledge\/app"
+    },
+    {
+      "type": "path",
+      "url": "\/Users\/aklump\/Code\/Packages\/php\/json_schema_validation"
+    },
+    {
+      "type": "github",
+      "url": "https://github.com/aklump/glob"
+    }
+  ],
+  "require-dev": {
+    "aklump\/knowledge": "@dev"
+  }
+}
