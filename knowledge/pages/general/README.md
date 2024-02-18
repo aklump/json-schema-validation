@@ -21,7 +21,7 @@ $validate = new \AKlump\JsonSchema\ValidateWithSchema($schema_json, [$schema_dir
 // Validate some data against the schema.
 $errors = $validate(["lorem", "ipsum"]);
 
-$is_valid = (bool) $errors;
+$is_valid = empty($errors);
 
 // Display any errors.
 if (!$is_valid) {
