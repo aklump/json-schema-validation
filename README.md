@@ -100,6 +100,13 @@ $path_to_schema = 'json_schema/foo.schema.json';
 ValidateWithSchema(file_get_contents($path_to_schema), dirname($path_to_schema);
 ```
 
+As you might expect these are equivalent:
+
+```
+"$ref": "_definitions.schema.json#/$defs/title"
+"$ref": "./_definitions.schema.json#/$defs/title"
+```
+
 ## Install with Composer
 
 1. Because this is an unpublished package, you must define it's repository in your project's _composer.json_ file. Add the following to _composer.json_:

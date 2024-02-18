@@ -105,4 +105,11 @@ $path_to_schema = 'json_schema/foo.schema.json';
 ValidateWithSchema(file_get_contents($path_to_schema), dirname($path_to_schema);
 ```
 
+As you might expect these are equivalent:
+
+```
+"$ref": "_definitions.schema.json#/$defs/title"
+"$ref": "./_definitions.schema.json#/$defs/title"
+```
+
 {{ composer_install|raw }}

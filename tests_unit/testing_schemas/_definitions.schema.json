@@ -4,6 +4,10 @@
     "title": {
       "type": "string",
       "description": "Title of the Nursery Rhyme"
+    },
+    "verseCount": {
+      "type": "integer",
+      "description": "Number of Verses in the Rhyme"
     }
   }
 }
