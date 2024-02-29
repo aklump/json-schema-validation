@@ -7,11 +7,11 @@ Provides a suite of classes to help with JSON Schema validation.
 ## Validate Data Using JSON Schema
 
 ```php
-$path_to_schema = 'json_schema/foo.schema.json'
+$path_to_schema = 'json_schema/foo.schema.json';
 $schema_json = file_get_contents($path_to_schema);
 
 // Create the validator for this schema.
-$validate = new \AKlump\JsonSchema\ValidateWithSchema($schema_json, dirname($path_to_schema);
+$validate = new \AKlump\JsonSchema\ValidateWithSchema($schema_json, dirname($path_to_schema));
 
 // Validate some data against the schema.
 $errors = $validate(["lorem", "ipsum"]);
@@ -52,7 +52,7 @@ $data_to_validate = (new \AKlump\JsonSchema\JsonDecodeLossless())(json_encode($d
 ```
 
 ```php
-$schema_json = file_get_contents('greeting.schema.json')
+$schema_json = file_get_contents('greeting.schema.json');
 $defaults = (new \AKlump\JsonSchema\GetPropertyDefaults())($schema_json);
 // 'Hello, World!' === $defaults['greeting'];
 ```
