@@ -112,4 +112,4 @@ As you might expect these are equivalent:
 "$ref": "./_definitions.schema.json#/$defs/title"
 ```
 
-{{ composer_install|raw }}
+{{ composer.install|raw }}
