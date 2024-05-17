@@ -18,6 +18,9 @@ class GetPropertyDefaults {
    */
   public function __invoke(string $schema_json): array {
     $schema = json_decode($schema_json, TRUE);
+    if (!is_array($schema)) {
+      throw new \InvalidArgumentException('$schema_json cannot be parsed as valid JSON schema.');
+    }
 
     $defaults = [];
     $this->getDefaults($schema, $defaults);
