@@ -57,6 +57,30 @@ $defaults = (new \AKlump\JsonSchema\GetPropertyDefaults())($schema_json);
 // 'Hello, World!' === $defaults['greeting'];
 ```
 
+### Using Default Values
+
+In these examples, `$dataset` is meant to represent user-provided values, which may need to be filled in with default values.  **Be sure to heed the argument order for `array_replace_recursive()`.**
+
+```php
+/** @var array $dataset An empty dataset example */
+$dataset = [];
+$dataset = array_replace_recursive($defaults, $dataset);
+// 'greeting' gets the default.
+$dataset['greeting'] === 'Hello, World!';
+
+/** @var array $dataset Greeting is already set. */
+$dataset = ['greeting' => 'Yo, dude!']
+$dataset = array_replace_recursive($defaults, $dataset);
+// 'greeting keeps the non-default value.
+$dataset['greeting'] === 'Yo, dude!';
+
+/** @var array $dataset Greeting is an empty string, will not be replaced. */
+$dataset = ['greeting' => '']
+$dataset = array_replace_recursive($defaults, $dataset);
+// 'greeting' is still an empty string.
+$dataset['greeting'] === '';
+```
+
 ## Relative Path $ref
 
 ```text
@@ -109,15 +133,19 @@ As you might expect these are equivalent:
 
 ## Install with Composer
 
-1. Because this is an unpublished package, you must define it's repository in your project's _composer.json_ file. Add the following to _composer.json_:
-
+1. Because this is an unpublished package, you must define it's repository in
+   your project's _composer.json_ file. Add the following to _composer.json_ in
+   the `repositories` array:
+   
     ```json
-    "repositories": [
-        {
-            "type": "github",
-            "url": "https://github.com/aklump/json-schema-validation"
-        }
-    ]
+    {
+        "type": "github",
+        "url": "https://github.com/aklump/json-schema-validation"
+    }
     ```
 
-1. Then `composer require aklump/json-schema-validation:^0.0`
+2. Require this package:
+   
+    ```
+    composer require aklump/json-schema-validation:^0.0
+    ```
