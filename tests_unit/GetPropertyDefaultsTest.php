@@ -10,6 +10,11 @@ use PHPUnit\Framework\TestCase;
  */
 class GetPropertyDefaultsTest extends TestCase {
 
+  public function testInvalidJSONThrows() {
+    $this->expectException(\InvalidArgumentException::class);
+    (new GetPropertyDefaults())('lorem},(foo.sucks');
+  }
+
   public function testDefaultsNotProvided() {
     $json = '{"$id":"http://example.com/example.json","type":"object","properties":{"stringProperty":{"type":"string"},"integerProperty":{"type":"integer"},"numberProperty":{"type":"number"},"objectProperty":{"type":"object"},"arrayProperty":{"type":"array"},"booleanProperty":{"type":"boolean"},"nullProperty":{"type":"null"}},"required":["stringProperty","integerProperty","numberProperty","objectProperty","arrayProperty","booleanProperty","nullProperty"]}';
     $defaults = (new GetPropertyDefaults())($json);
