@@ -6,8 +6,12 @@
       "url": "\/Users\/aklump\/Code\/Packages\/php\/knowledge\/app"
     },
     {
-      "type": "path",
-      "url": "\/Users\/aklump\/Code\/Packages\/php\/json_schema_validation"
+      "type": "github",
+      "url": "https://github.com/aklump/json-schema-loading"
+    },
+    {
+      "type": "github",
+      "url": "https://github.com/aklump/json-schema-validation"
     },
     {
       "type": "github",
