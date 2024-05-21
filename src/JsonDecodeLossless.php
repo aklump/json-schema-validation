@@ -24,7 +24,12 @@ class JsonDecodeLossless {
   private function decode($value, bool $init = NULL) {
     if (is_null($init)) {
       $init = TRUE;
+      $is_object = is_object($value);
       $value = json_decode(json_encode($value), TRUE);
+      if (empty($value) && $is_object) {
+        $value = (object) $value;
+      }
+      unset($is_object);
     }
     if (is_scalar($value)) {
       return $value;

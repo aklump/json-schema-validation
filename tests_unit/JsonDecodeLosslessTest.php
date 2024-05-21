@@ -21,6 +21,8 @@ class JsonDecodeLosslessTest extends TestCase {
 
   public function dataFortestInvokeProvider() {
     $tests = [];
+    $tests[] = ['{}'];
+    $tests[] = ['[]'];
     $tests[] = ['null'];
     $tests[] = ['true'];
     $tests[] = ['99'];
