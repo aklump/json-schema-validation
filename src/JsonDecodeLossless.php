@@ -2,6 +2,8 @@
 
 namespace AKlump\JsonSchema;
 
+use stdClass;
+
 /**
  * Class JsonDecodeLossless
  *
@@ -21,28 +23,22 @@ class JsonDecodeLossless {
     return $this->decode(json_decode($json));
   }
 
-  private function decode($value, bool $init = NULL) {
-    if (is_null($init)) {
-      $init = TRUE;
-      $is_object = is_object($value);
+  private function decode($value, $comparator = NULL, $context = []) {
+    $comparator = $comparator ?? $value;
+    if (!isset($context['init'])) {
+      $context['init'] = TRUE;
       $value = json_decode(json_encode($value), TRUE);
-      if (empty($value) && $is_object) {
-        $value = (object) $value;
-      }
-      unset($is_object);
     }
     if (is_scalar($value)) {
       return $value;
     }
-    elseif (is_array($value)) {
-      $keys = array_keys($value);
-      if ($keys !== array_keys($keys)) {
-        $value = (object) $value;
-      }
+    elseif (is_array($value) && is_object($comparator)) {
+      $value = (object) $value;
     }
-    if (is_iterable($value) || $value instanceof \stdClass) {
-      foreach ($value as &$v) {
-        $v = $this->decode($v, $init);
+    if (is_iterable($value) || $value instanceof stdClass) {
+      foreach ($value as $key => &$v) {
+        $c = is_object($comparator) ? $comparator->{$key} : $comparator[$key];
+        $v = $this->decode($v, $c, $context);
       }
     }
 
