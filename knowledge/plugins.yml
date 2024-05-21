@@ -1,3 +1,4 @@
 #mermaid:
 #  width: 1000
-composer: {}
+composer:
+  title: Install with Composer
