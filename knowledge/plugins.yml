@@ -1,4 +1,5 @@
-#mermaid:
-#  width: 1000
 composer:
   title: Install with Composer
+badges:
+  - language
+  - license
