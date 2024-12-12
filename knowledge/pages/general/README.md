@@ -7,6 +7,8 @@ tags: ''
 
 ![Validation](../../images/validation.jpg)
 
+{{ badges }}
+
 Provides a suite of classes to help with JSON Schema validation.
 
 ## Validate Data Using JSON Schema
