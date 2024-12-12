@@ -2,6 +2,8 @@
 
 ![Validation](images/validation.jpg)
 
+![](https://badgen.net/packagist/php/aklump/dom-testing-selectors) ![](https://badgen.net/github/license/aklump/json-schema-validation)
+
 Provides a suite of classes to help with JSON Schema validation.
 
 ## Validate Data Using JSON Schema
@@ -139,12 +141,11 @@ As you might expect these are equivalent:
    
     ```json
     {
-        "type": "github",
-        "url": "https://github.com/aklump/json-schema-validation"
+     "type": "github",
+     "url": "https://github.com/aklump/json-schema-validation"
     }
     ```
-
-2. Require this package:
+1. Require this package:
    
     ```
     composer require aklump/json-schema-validation:^0.0
