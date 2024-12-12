@@ -10,6 +10,11 @@ use PHPUnit\Framework\TestCase;
  */
 class GetPropertyDefaultsTest extends TestCase {
 
+  public function testFoo() {
+   $defaults = (new GetPropertyDefaults())('[]');
+   $this->assertSame([], $defaults);
+  }
+
   public function testInvalidJSONThrows() {
     $this->expectException(\InvalidArgumentException::class);
     (new GetPropertyDefaults())('lorem},(foo.sucks');
@@ -27,7 +32,7 @@ class GetPropertyDefaultsTest extends TestCase {
     $this->assertSame(NULL, $defaults['nullProperty']);
   }
 
-  public function testIvokeWithNestedProperties() {
+  public function testInvokeWithNestedProperties() {
     $json = '{"$schema":"http://json-schema.org/draft-07/schema","type":"object","properties":{"apple":{"type":"object","properties":{"banana":{"type":"string","default":"yellow"},"cherry":{"type":"object","properties":{"date":{"type":"object","properties":{"elderberry":{"type":"string","default":"purple"},"fig":{"type":"object","properties":{"grape":{"type":"object","properties":{"huckleberry":{"type":"string","default":"blue"},"indianPlum":{"type":"string","default":"red"}},"required":["huckleberry","indianPlum"]}},"required":["grape"]}},"required":["elderberry","fig"]}},"required":["date"]}},"required":["banana","cherry"]}},"required":["apple"]}';
     $defaults = (new GetPropertyDefaults())($json);
     $this->assertSame('yellow', $defaults['apple']['banana']);

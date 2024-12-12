@@ -3,6 +3,7 @@
 namespace AKlump\JsonSchema;
 
 use AKlump\DefaultValue\DefaultValue;
+use InvalidArgumentException;
 
 class GetPropertyDefaults {
 
@@ -19,7 +20,7 @@ class GetPropertyDefaults {
   public function __invoke(string $schema_json): array {
     $schema = json_decode($schema_json, TRUE);
     if (!is_array($schema)) {
-      throw new \InvalidArgumentException('$schema_json cannot be parsed as valid JSON schema.');
+      throw new InvalidArgumentException('$schema_json cannot be parsed as valid JSON schema.');
     }
 
     $defaults = [];
@@ -37,8 +38,8 @@ class GetPropertyDefaults {
         $type = $value['type'] ?? 'null';
         $value_to_assign = DefaultValue::get($type);
       }
-      $foo = $this->createAssociativeArray($parents, $value_to_assign);
-      $defaults = array_merge_recursive($defaults, $foo);
+      $array = $this->createAssociativeArray($parents, $value_to_assign);
+      $defaults = array_merge_recursive($defaults, $array);
     }
     else {
       foreach (($value['properties'] ?? []) as $name => $property) {
@@ -50,7 +51,10 @@ class GetPropertyDefaults {
   }
 
   private function createAssociativeArray($keys, $value = NULL) {
-    if (count($keys) === 1) {
+    if (empty($keys)) {
+      return [];
+    }
+    elseif (count($keys) === 1) {
       return [$keys[0] => $value];
     }
     else {
