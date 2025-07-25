@@ -5,6 +5,8 @@ namespace AKlump\JsonSchema;
 use InvalidArgumentException;
 use Opis\JsonSchema\Errors\ErrorFormatter;
 use Opis\JsonSchema\Exceptions\SchemaException;
+use Opis\JsonSchema\ValidationResult;
+use Opis\JsonSchema\Validator;
 
 final class ValidateWithSchema {
 
@@ -13,6 +15,8 @@ final class ValidateWithSchema {
   protected array $schemaDirs = [];
 
   protected string $schema;
+
+  private ValidationResult $result;
 
   /**
    * Constructs a new instance of the class.
@@ -31,33 +35,12 @@ final class ValidateWithSchema {
     }
   }
 
-  protected function getValidator(): \Opis\JsonSchema\Validator {
-    // @url https://opis.io/json-schema/2.x/php-validator.html
-    $validator = new \Opis\JsonSchema\Validator();
-
-    // This is so we can resolve relative paths, like this:
-    // "$ref": "./_foo.schema.json#/lorem/ipsum
-    foreach ($this->schemaDirs as $schema_dir) {
-      $validator->resolver()->registerPrefix('schema:///', $schema_dir);
-    }
-
-    //    $validator->setMaxErrors(5);
-    return $validator;
-  }
-
-  protected function addSchemaDirectory(string $dir): void {
-    if (!file_exists($dir)) {
-      throw new InvalidArgumentException(sprintf('$dir does not exist: %s', $dir));
-    }
-    $this->schemaDirs[] = $dir;
-  }
-
   public function __invoke($data): array {
     $validator = $this->getValidator();
     try {
-      $result = $validator->validate($data, $this->schema);
-      if ($result->hasError()) {
-        $error = $result->error();
+      $this->result = $validator->validate($data, $this->schema);
+      if ($this->result->hasError()) {
+        $error = $this->result->error();
         $formatter = new ErrorFormatter();
         foreach ($formatter->format($error) as $path => $comments) {
           foreach ($comments as $comment) {
@@ -71,6 +54,46 @@ final class ValidateWithSchema {
     }
 
     return $this->problems ?? [];
+  }
+
+  /**
+   * @return \Opis\JsonSchema\ValidationResult
+   */
+  public function getResult(): ValidationResult {
+    return $this->result;
+  }
+
+  /**
+   * Retrieves the Validator instance, creating it if necessary.
+   *
+   * This method initializes the Validator, configures it to resolve relative paths
+   * for schemas using registered schema directories, and ensures the instance
+   * is reused for subsequent invocations.  The validator instance is lazy
+   * initialized and cached for performance.
+   *
+   * @return Validator The Validator instance used for JSON schema validation.
+   *   You may manipulate the validator before calling __invoke() if desired.
+   */
+
+  public function getValidator(): Validator {
+    if (!isset($this->validator)) {
+      // @url https://opis.io/json-schema/2.x/php-validator.html
+      $this->validator = new Validator();
+      // This is so we can resolve relative paths, like this:
+      // "$ref": "./_foo.schema.json#/lorem/ipsum
+      foreach ($this->schemaDirs as $schema_dir) {
+        $this->validator->resolver()->registerPrefix('schema:///', $schema_dir);
+      }
+    }
+
+    return $this->validator;
+  }
+
+  protected function addSchemaDirectory(string $dir): void {
+    if (!file_exists($dir)) {
+      throw new InvalidArgumentException(sprintf('$dir does not exist: %s', $dir));
+    }
+    $this->schemaDirs[] = $dir;
   }
 
 }
